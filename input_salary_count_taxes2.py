@@ -30,10 +30,10 @@ class LogWindow(Frame):
     def create_widgets(self):
         """create 2 buttons"""
         
-        self.label_file=Label(self, text="are you sure? ")
+        self.label_file = Label(self, text="are you sure? ")
         self.label_file.grid(row=0, column=0, columnspan=3, sticky=N)
         
-        self.button_yes =Button(self, text="yes")
+        self.button_yes = Button(self, text="yes")
         self.button_yes.grid(row=1, column=1, columnspan=3, sticky=W)
         self.button_yes["command"]=self.yes
         
@@ -176,20 +176,20 @@ class Application(Frame):
             raise NameError('name of csv File must be:  {0}.csv '.format(file_name))
             
         if 'salary' not in data.dtypes.index:
-            data['salary']=0
+            data['salary'] = 0
         if 'federal_taxes' not in data.dtypes.index:
-            data['federal_taxes']=0
+            data['federal_taxes'] = 0
         if 'state_taxes' not in data.dtypes.index:
-            data['state_taxes']=0
+            data['state_taxes'] = 0
         if 'total' not in data.dtypes.index:
-            data['total']=0
+            data['total'] = 0
 
         self.dataF=data
         
         self.text_name.insert(0.0,str(self.dataF.loc[self.counter,'name'])+'\n')
-        self.label_fed['text']="federal taxes "+str(self.dataF.loc[self.counter,"federal_taxes"])
-        self.label_st['text']="state_taxes "+str(self.dataF.loc[self.counter, "state_taxes"])
-        self.label_t["text"]="total "+str(self.dataF.loc[self.counter,"total"])
+        self.label_fed['text'] = "federal taxes "+str(self.dataF.loc[self.counter,"federal_taxes"])
+        self.label_st['text'] = "state_taxes "+str(self.dataF.loc[self.counter, "state_taxes"])
+        self.label_t["text"] = "total "+str(self.dataF.loc[self.counter,"total"])
         self.rewrite()
 
     def set_salary(self):
@@ -217,46 +217,48 @@ class Application(Frame):
   
     def rewrite(self):
         """rewrite most text of widgets in main window"""
-        self.label_100000["text"]="earn more 100000 "+str(len(self.dataF[self.dataF['salary']>=100000]))
-        self.label_50000["text"]="earn more 50000, less 100000 "+str(len(self.dataF[(self.dataF['salary']<100000)&(self.dataF['salary']>=50000)]))
-        self.label_25000["text"]="earn more 25000, less 50000 "+str(len(self.dataF[(self.dataF['salary']<50000)&(self.dataF['salary']>=25000)]))
-        self.label_0["text"]="earn  less 25000 "+str(len(self.dataF[self.dataF['salary']<25000]))
+        self.label_100000["text"] = "earn more 100000 " + str(len(self.dataF[self.dataF['salary']>=100000]))
+        self.label_50000["text"] = "earn more 50000, less 100000 "\
+                    + str(len(self.dataF[(self.dataF['salary']<100000)&(self.dataF['salary']>=50000)]))
+        self.label_25000["text"] =" earn more 25000, less 50000 "\
+                    + str(len(self.dataF[(self.dataF['salary']<50000)&(self.dataF['salary']>=25000)]))
+        self.label_0["text"] = "earn  less 25000 " + str(len(self.dataF[self.dataF['salary']<25000]))
         
-        self.label_t_fed["text"]="total federal taxes "+str(sum(self.dataF["federal_taxes"]))
-        self.label_t_st["text"]="total state taxes "+str(sum(self.dataF["state_taxes"]))
+        self.label_t_fed["text"] = "total federal taxes " + str(sum(self.dataF["federal_taxes"]))
+        self.label_t_st["text"] = "total state taxes " + str(sum(self.dataF["state_taxes"]))
         
         self.text_name.insert(0.0,str(self.dataF.loc[self.counter,'name'])+'\n')
         
-        self.label_new["text"]="sated salary"+str(self.dataF.loc[self.counter,'salary'])
-        self.label_fed["text"]='federal_taxes '+str(self.dataF.loc[self.counter,'federal_taxes'])
-        self.label_st["text"]='state_taxes '+str(self.dataF.loc[self.counter,'state_taxes'])
-        self.label_t["text"]="total "+str(self.dataF.loc[self.counter,'total'])
+        self.label_new["text"] = "sated salary " + str(self.dataF.loc[self.counter,'salary'])
+        self.label_fed["text"] = 'federal_taxes ' + str(self.dataF.loc[self.counter,'federal_taxes'])
+        self.label_st["text"] = 'state_taxes ' + str(self.dataF.loc[self.counter,'state_taxes'])
+        self.label_t["text"] = "total " + str(self.dataF.loc[self.counter,'total'])
            
         root.update()
         
     def update_wind(self):
         """update main window"""
         if self.counter<len(self.dataF['salary'])-1:
-            self.counter+=reque
+            self.counter += reque
         self.rewrite()
 
     def up(self):
         """go up in the dataFrame """ 
         if self.counter>0:
-            self.counter-=1
+            self.counter -= 1
         self.rewrite()    
 #        
             
     def down(self):
         """go down in the dataFrame """ 
         if self.counter<len(self.dataF['salary'])-1:
-            self.counter+=1
+            self.counter += 1
         self.rewrite()
      
         
     def out(self):
         """quit and save in csv"""
-        filename=self.filename.get()
+        filename = self.filename.get()
         self.dataF.to_csv("%s.csv"%(filename), cols=['salary','federal_taxes','state_taxes','total'])        
         
         
@@ -266,7 +268,7 @@ class Application(Frame):
     
     
 
-root=Tk()
+root = Tk()
 root.title("simple GUI")
 root.geometry("450x300")
 app=Application(root)
